@@ -26,7 +26,7 @@ import { Result } from "postcss";
 import { resourceLimits } from "worker_threads";
 import { tree } from "next/dist/build/templates/app-page";
 
-export default function signinPage() {
+export default function SigninPage() {
   const [isSubmiting, setisSubmiting] = useState(false);
   const { toast } = useToast();
   const router = useRouter();

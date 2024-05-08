@@ -92,7 +92,7 @@ function UserDashboard() {
     fetchMessages();
 
     fetchAcceptMessages();
-  }, [session, setValue, fetchMessages]);
+  }, [session, setValue, fetchMessages,fetchAcceptMessages]);
 
   // Handle switch change
   const handleSwitchChange = async () => {
