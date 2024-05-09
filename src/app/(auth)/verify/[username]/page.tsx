@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic"
 
 import { useToast } from "@/components/ui/use-toast";
 import { verifySchemaValidation } from "@/schemas/verifySchema";
@@ -17,7 +18,7 @@ import {
 
 export default function VerifyAccount() {
   const router = useRouter();
-  const params = useParams<{ username: string }>();
+  const {username} = useParams<{ username: string }>();
   const { toast } = useToast();
 
   const [hurray, sethurray] = useState(false);
@@ -27,7 +28,7 @@ export default function VerifyAccount() {
       console.log(value,"api request passing of value");
       
       const response = await axios.post(`/api/verify-code`, {
-        username: params.username,
+        username: username,
         code: value,
       });
       sethurray(true);

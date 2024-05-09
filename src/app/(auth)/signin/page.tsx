@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,10 +27,10 @@ import { resourceLimits } from "worker_threads";
 import { tree } from "next/dist/build/templates/app-page";
 
 export default function SigninPage() {
-  const [isSubmiting, setisSubmiting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
-  //zod implementation
+  // zod implementation
   const form = useForm<z.infer<typeof signinSchemaValidation>>({
     resolver: zodResolver(signinSchemaValidation),
     defaultValues: {
@@ -39,58 +39,56 @@ export default function SigninPage() {
     },
   });
 
-  const onsubmit = async (data: z.infer<typeof signinSchemaValidation>) => {
-  
-    if(data.identifier==="" || data.password==""){
+  const onSubmit = async (data: z.infer<typeof signinSchemaValidation>) => {
+    if (data.identifier === "" || data.password === "") {
       toast({
-        title: "operation failed 🥲",
-        description: "please enter all fields",
+        title: "Operation failed 😢",
+        description: "Please enter all fields",
         variant: "whiteboy",
       });
       return;
-    }else{
-      setisSubmiting(true)
-    const result = await signIn("credentials", {
-      redirect: false,
-      identifier: data.identifier,
-      password: data.password,
-    });
-    console.log(result);
-    if (result?.error) {
-      if (result.error === "CredentialsSignin") {
-        toast({
-          title: "Login Failed",
-          description: "Incorrect username or password",
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: result.error,
-          variant: "destructive",
-        });
+    } else {
+      setIsSubmitting(true);
+      const result = await signIn("credentials", {
+        redirect: false,
+        identifier: data.identifier,
+        password: data.password,
+      });
+      console.log(result);
+      if (result?.error) {
+        if (result.error === "CredentialsSignin") {
+          toast({
+            title: "Login Failed",
+            description: "Incorrect username or password",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: result.error,
+            variant: "destructive",
+          });
+        }
+      }
+
+      if (result?.url) {
+        setIsSubmitting(false);
+        router.replace("/dashboard");
       }
     }
-
-    if (result?.url) {
-      setisSubmiting(false)
-      router.replace("/dashboard");
-    }
   };
-  }
-    
 
   return (
     <div className="flex justify-center items-center min-h-screen ">
       <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md  bg-zinc-950">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-            Join mystry message
+            Join mystery message
           </h1>
-          <p className="mb-4">Sign up to start your anonymous adventure</p>
+          <p className="mb-4">Sign in to start your anonymous adventure</p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onsubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               name="identifier"
               control={form.control}
@@ -100,7 +98,6 @@ export default function SigninPage() {
                   <FormControl>
                     <Input placeholder="email" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -114,19 +111,18 @@ export default function SigninPage() {
                   <FormControl>
                     <Input type="password" placeholder="password" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit"  disabled={isSubmiting}>
-              {isSubmiting ? (
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  'please wait..'
+                  please wait...
                 </>
               ) : (
-                "Signin"
+                "Sign in"
               )}
             </Button>
           </form>
@@ -134,7 +130,7 @@ export default function SigninPage() {
 
         <div className="text-center mt-4">
           <p>
-           not having an account 🫢
+            Don&apos;t have an account yet?{" "}
             <Link href="/signup" className="text-blue-600 hover:text-blue-800">
               Sign Up Now
             </Link>
