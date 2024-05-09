@@ -18,17 +18,20 @@ import {
 
 export default function VerifyAccount() {
   const router = useRouter();
-  const {username} = useParams<{ username: string }>();
+  const params = useParams<{ username: string }>();
   const { toast } = useToast();
 
+  console.log(params,"here i am");
+  
   const [hurray, sethurray] = useState(false);
   const [value, setvalue] = useState("");
   const onComplete = async (value: string) => {
     try {
       console.log(value,"api request passing of value");
+      console.log(params.username,"api request passing name");
       
       const response = await axios.post(`/api/verify-code`, {
-        username: username,
+        username: params.username,
         code: value,
       });
       sethurray(true);
@@ -64,7 +67,8 @@ export default function VerifyAccount() {
             </h1>
           )}
 
-          <p className="mb-4">Enter the verification code sent to your email</p>
+          <p className="mb-4 text-white line-through">Enter the verification code sent to your email</p>
+          <p className="mb-4"> 📌📌 Just enter a  random 6 digit nuber ( my resend.com free tier expired so i modifed the api)</p>
         </div>
 
         <div className="flex justify-center align-middle">

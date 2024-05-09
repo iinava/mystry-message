@@ -5,10 +5,10 @@ export async function POST(request: Request) {
   await dbConnect();
 
   try {
-    
     const { username, code } = await request.json();
     // const req = await request.json();
     // console.log(req);
+    console.log(username,code);
     
     const decodedUsername = decodeURIComponent(username);
     const user = await UserModel.findOne({
@@ -28,7 +28,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const isCodeValid = user.verifyCode === code;
+    // const isCodeValid = user.verifyCode === code;
+    // since my resend email free plan doesnot allow other users mail , i cannot afford premium now 
+    const isCodeValid = true
     const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date();
     console.log(isCodeNotExpired,isCodeValid,"code expired or not");
     

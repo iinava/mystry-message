@@ -59,9 +59,15 @@ export async function POST(request: Request) {
 
       await newUser.save();
     }
+console.log(email);
 
     // Send verification email
-    const emailResponse = await sendVerificationEmail(email, username, verifyCode);
+    // the code below was the actual code but resend.com free tier can only have one email for testing so for others i have modifed slightly , original code is commented
+    // const emailResponse = await sendVerificationEmail(email, username, verifyCode)
+    ;
+    const emailResponse ={success: true, message: "sending email successfully"}
+    console.log(emailResponse);
+    
 
     if (!emailResponse.success) {
       return new Response(
